@@ -1,53 +1,56 @@
 import React from "react";
-import PropTypes from "prop-types";
+import axios from "axios";
+import Movie from "./Movie";
+import "./App.css";
 
-const foodInfo = [
-  {
-    id: 1,
-    name: "kimchi",
-    image:  "https://image.auction.co.kr/itemimage/1b/45/1c/1b451c3fa6.jpg" 
-  },
-  {
-    id: 2,
-    name: "samgeopsal",
-    image:  "https://pds.joins.com/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg"
-  },
-  {
-    id: 3,
-    name: "doncasu",
-    image:  "https://post-phinf.pstatic.net/MjAyMDA0MTZfMjY3/MDAxNTg2OTk5MzYwOTMw.YZk3XJCkJqOrZmSzXTGfnXcfoj5CoLQfY9kEBhBmlyYg.WdEgjt1SmPLlCfi8nmVMB79FymTDi3ApEfQJrGF57Acg.JPEG/1.jpg?type=w1200"
-  },
-  {
-    id: 4,
-    name: "gimbap",
-    image:  "https://craftlog.com/m/i/5805364=s1280=h960.webp"
-  },
-]
+class App extends React.Component {
 
-function Food({name, picture}) {
-  return (
-    <div>
-      <h1>I love {name}</h1>
-      <img src={picture} alt={name} width="200"/>
-    </div>
-  )
-}
+  state = {
+    isLoading : true,
+    movies : [],
+  }
 
-Food.propTypes = {
-  name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired
-}
+  getMovies = async () => {
+    // const movies & console.log(movies.data.data.movies)  // 영화종류 ES6으로 가져오기
+    const {data:{data:{movies}}} = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json");
+    this.setState({movies: movies, isLoading: false})
+    // this.setState({movies, isLoading: false}) // ES6 movies:movies 
+    
+  }
 
-function renderFood(dish) {
-  return <Food key={dish.id} name={dish.name} picture ={dish.image}></Food>
-}
+  componentDidMount() {
+    this.getMovies();
 
-function App() {
-  return (
-    <div>
-      {foodInfo.map(renderFood)}
-    </div>
-  );
+  }
+
+  render () {  
+    const { isLoading, movies } = this.state; // 인자에 직접 this.state 를 입력하지 않고 생략하기 위해 작업
+    return (
+      <section className="container">
+        {isLoading ? (
+          <div className="loader">
+            <span className="loader__text">Loading...</span>
+          </div> 
+        ) : (
+          <div className="movie-list">
+            {
+              movies.map(item => (
+                <Movie 
+                  key={item.id} 
+                  id={item.id} 
+                  title={item.title} 
+                  year={item.year} 
+                  genres={item.genres}
+                  summary={item.summary} 
+                  poster={item.medium_cover_image}
+                />
+              )) 
+            }
+          </div>
+        )}
+      </section>
+    )
+  }
 }
 
 export default App;
