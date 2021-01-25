@@ -12,7 +12,8 @@ class App extends React.Component {
 
   getMovies = async () => {
     // const movies & console.log(movies.data.data.movies)  // 영화종류 ES6으로 가져오기
-    const {data:{data:{movies}}} = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json");
+    const {data:{data:{movies}}} = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json?sort_by=like_count"); 
+    // sort_by (title, year, rating, peers, seeds, download_count, like_count, date_added)
     this.setState({movies: movies, isLoading: false})
     // this.setState({movies, isLoading: false}) // ES6 movies:movies 
     
