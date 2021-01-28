@@ -2,9 +2,8 @@ import React from "react";
 
 
 function Detail() {
-    return (
-        <span>Hello11111111111111111111!</span>
-    )
+    return <span>HelloHelloHello!!!!</span>
+       
 }
 
 export default Detail;
