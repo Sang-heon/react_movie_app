@@ -39,5 +39,17 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://Sang-heon.github.io/react_movie_app"
+  "homepage": "https://Sang-heon.github.io/react_movie_app",
+  "description": "First React App Starting from January 23, 2021",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sang-heon/react_movie_app.git"
+  },
+  "author": "sangheon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sang-heon/react_movie_app/issues"
+  }
 }
